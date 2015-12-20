@@ -1,0 +1,114 @@
+'.source.python':
+#FLASK
+  'Flask Dependencies':
+    'prefix' : 'flask'
+    'body': """
+    from flask import Flask, render_template, request, redirect, session
+    app = Flask(__name__)
+    app.secret_key = 'my_secret_key'
+    if __name__ == '__main__':
+      app.run(debug = True)
+    """
+  'index flask':
+    'prefix' : 'index'
+    'body': """
+    #returns info on all ${1:users} (as a partial or JSON)
+    @app.route("/${1:users}", methods =["GET"])
+    def index():
+      pass
+    """
+  'show flask':
+    'prefix' : 'show'
+    'body': """
+    #returns info on a single ${1:users} (as a partial or JSON)
+    @app.route("/${1:users}/<int:id>", methods =["GET"])
+    def show(id):
+      pass
+    """
+  'new flask':
+    'prefix' : 'new'
+    'body': """
+    #returns a form to create ${1:users}
+    @app.route("/${1:users}/new", methods =["GET"])
+    def new():
+      pass
+    """
+  'create flask':
+    'prefix' : 'create'
+    'body': """
+    #adds ${1:users} to DB
+    @app.route("/${1:users}", methods =["POST"])
+    def create():
+      pass
+    """
+  'edit flask':
+    'prefix' : 'edit'
+    'body': """
+    #returns template to update
+    @app.route("/${1:users}/<int:id>/edit", methods =["GET"])
+    def edit(id):
+      pass
+    """
+  'update flask':
+    'prefix' : 'update'
+    'body': """
+    #updates with request.form
+    @app.route("/${1:users}/<int:id>", methods =["POST", "PUT", "PATCH"])
+    def update(id):
+      pass
+    """
+  'delete flask':
+    'prefix' : 'delete'
+    'body': """
+    #not perfectly RESTful, deletes by ${1:users} by id
+    @app.route("/${1:users}/<int:id>/delete", methods =["POST", "DELETE"])
+    def delete(id):
+      pass
+    """
+  'email_regex':
+    'prefix' : 'REGEX_EMAIL'
+    'body': """
+    import re
+    EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9\.\+_-]+@[a-zA-Z0-9\._-]+\.[a-zA-Z]*$')
+    """
+  'password_regex':
+    'prefix' : 'REGEX_PASSWORD'
+    'body': """
+    import re
+    #at least one capital, one number
+    PASSWORD = re.compile(r'.*?[A-Z]+.*?[0-9]+|.*?[0-9]+.*?[A-Z]')
+    """
+  'sql_index':
+    'prefix' : 'sql_index_method'
+    'body':"""
+    query = "SELECT * FROM ${1:users}"
+    print query
+    """
+  'sql_show':
+    'prefix' : 'sql_index_method'
+    'body':"""
+    query = "SELECT * FROM ${1:users} WHERE id = {}".format(id)
+    print query
+    """
+  'sql_create':
+    'prefix' : 'sql_create_method'
+    'body' : """
+    #allows us to add more info to the data object, if necessary
+    data = request.form
+    query = "INSERT into ${1:users} (keys in data, created_at, updated_at) values (values in data as {} or '{}', NOW(), NOW())".format(values in data)
+    print query
+    """
+  'sql_update':
+    'prefix': 'sql_update_method'
+    'body': """
+    data = request.form
+    query = "UPDATE ${1:users} SET data.key = data.value WHERE id = {}".format(id)
+    print query
+    """
+  'sql_delete':
+      'prefix': 'sql_delete_method'
+      'body' : """
+      query = "DELETE from ${1:users} WHERE id = {}".format(id)
+      print query
+      """
+#END FLASK
